@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+</head>
+<body ng-app="loginApp">
+  <div ng-controller="loginCtrl">
+    <form id="login_form" ng-submit="submit(loginFrom.$valid)" onsubmit="javascript:return false" action="" class="form-horizontal" role="form" novalidate name="loginFrom">
+        名字: <input ng-model="user.username" name="username" type="text" ng-minlength="3" ng-maxlength="50" ng-trim="true" placeholder="用户名" autofocus required><br/>
+        <div ng-show="loginFrom.username.$dirty&&loginFrom.username.$invalid">
+            <span ng-show="loginFrom.username.$error.required">请填写名字</span>
+            <span ng-show="loginFrom.username.$error.minlength||loginForm.username.$error.maxlength" class="help-block">用户名必须在3-50个字符之间！</span>
+            <span ng-show="loginForm.username.$error.maxlength" class="help-block">用户名必须小宇50个字符！</span>
+        </div>
+ 
+        Email: <input ng-model="user.userpassword" name="userpassword" type="password" required><br/>
+        <div ng-show="loginFrom.userpassword.$dirty && loginFrom.userpassword.$invalid" ng-minlength="6" ng-maxlength="16" placeholder="密 码" ng-trim="false" >提示:
+            <span ng-show="loginFrom.userpassword.$error.required">请输入密码</span>
+            <span ng-show="loginFrom.userpassword.$error.minlength" class="help-block">密码必须在6-16个字符之间！</span>
+            <span ng-show="loginForm.userpassword.$error.maxlength" class="help-block">密码必须小宇16个字符！</span>
+        </div>
+        性别: <input value="男" ng-model="user.gender" type="radio">男
+        <input value="女" ng-model="user.gender" type="radio">女
+        <br/>
+        <div ng-show="!loginFrom.userAgree || !user.agreeSign">请同意并签名~</div>
+        <button ng-click="reset()" ng-disabled="isUnchanged(user)">RESET</button>
+        <button ng-click="update(user)" type="submit" ng-disabled="loginFrom.$invalid || isUnchanged(user)">SAVE</button>
+    </form>
+    <pre>form = {{user | json}}</pre>
+    <pre>saved = {{saved | json}}</pre>
+  </div>
+ 
+  <script src="lib/jquery/jquery-1.11.3.min.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <!--<script src="js/app.js"></script>
+  <script src="js/services.js"></script>-->
+  <script src="js/controllers.js"></script>
+  <!--<script src="js/filters.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>  
+  <script src="lib/angular/angular-cookies.js"></script> 
+  <script src="js/directives.js"></script>-->
+  <script type="text/javascript">
+    var app = angular.module("loginApp", []);
+    app.controller("loginCtrl", function ($scope,$window) {
+        $scope.saved = {};
+        $scope.update = function(user) {
+            $scope.saved = angular.copy(user);
+        };
+ 
+        $scope.reset = function() {
+            $scope.user = angular.copy($scope.saved);
+        };
+ 
+        $scope.isUnchanged = function(user) {
+            return angular.equals(user, $scope.saved);
+        };
+ 
+        $scope.reset();
+    });
+  </script>
+</body>
+</html>

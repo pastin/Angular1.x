@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+</head>
+<body ng-app="myapp">
+  <h1>Route Demo index</h1>
+  <div ng-view></div>
+  <script src="lib/jquery/jquery-1.11.3.min.js"></script>
+  <script src="lib/angular/angular.js"></script>
+ <!--<script type="text/javascript" src="lib/angular/angular-route.min.js"></script>-->
+
+  <script type="text/javascript">
+    var app = angular.module('myapp',[]);
+    app.config(['$routeProvider',function($routeProvider){
+      $routeProvider.when('/list',{
+        templateUrl:'route-list.html',
+        controller:'RouteListCtrl'
+      })
+      .when('/list/:id',{
+        templateUrl:'route-detail.html',
+        controller:'RouteDetailCtrl'
+      })
+      .otherwise({
+        redirectTo:'/list'
+      });
+    }]);
+    app.controller('RouteListCtrl',['$scope',function($scope){
+      console.log('RouteListCtrl');
+    }]);
+    app.controller('RouteDetailCtrl',['$scope','$routeParams',function($scope,$routeParams){
+      console.log('RouteDetailCtrl');
+      $scope.id = $routeParams.id;
+    }]);
+  </script>
+</body>
+</html>

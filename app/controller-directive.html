@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="css/app.css"/>
+  <style type="text/css">
+    .info-plane{
+      width:300px;
+      height:400px;
+      border: 1px solid black;
+      float: left;
+      padding: 20px;
+      border-radius: 4px;
+    }
+    .btn-group{
+      width:400px;
+      height:400px;
+      float: left;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div ng-controller="StudentCtrl" data-ng-init="load()">
+    <stu-info stud="sd" ></stu-info>
+    <div class="btn-group" >
+      <ul>
+        <li ng-repeat="student in students">
+          <button ng-click="studentInfo(student)"><h3>{{student.name}}</h3></button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="lib/angular/angular.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('myApp',[]);
+    app.controller('StudentCtrl',['$scope',function($scope){
+      $scope.load = function() {  
+              $scope.sd = {id:'未选择',name:'未选择',age:'未选择',sex:'未选择'};
+        }  
+      $scope.students = [
+        {id:001,name:'张三',age:16,sex:'男'},
+        {id:002,name:'李四',age:14,sex:'女'},
+        {id:003,name:'王五',age:15,sex:'男'},
+        {id:004,name:'赵六',age:19,sex:'女'},
+        {id:005,name:'小明',age:12,sex:'男'},
+        {id:006,name:'老王',age:15,sex:'男'}
+      ]
+      $scope.studentInfo = function(stu){
+        //$scope.$watch('sd',function(data){
+          $scope.sd = stu;
+        //})
+      }
+    }]);
+    app.directive('stuInfo',['$compile',function($compile){
+      return{
+        restrict:'AE',
+        scope:
+          {
+            stud:'='
+          },
+        template:'<div class="info-plane"><h4>学号：{{stud.id}}</4><h4>姓名：{{stud.name}}</4><h4>年龄：{{stud.age}}</4><h4>性别：{{stud.sex}}</4></div>',
+        replace:false,
+        link:function(scope,elem,attrs){
+          /*scope.$watch('stud',function(value){
+            console.log(value)
+          });*/
+
+          /*scope.$watch('stud',function(newv,oldv){
+            scope.stud = newv;
+          })*/
+
+          /*var _html = '';
+          _html += '<div class="info-plane">'; 
+          _html += '<h4>学号：'; 
+          _html += scope.stud.id; 
+          _html += '</h4>'; 
+          _html += '<h4>姓名：'; 
+          _html += scope.stud.name; 
+          _html += '</h4>'; 
+          _html += '<h4>年龄：'; 
+          _html += scope.stud.age; 
+          _html += '</h4>'; 
+          _html += '<h4>性别：'; 
+          _html += scope.stud.sex; 
+          _html += '</h4>'; 
+          _html += '</div>'; 
+          elem.append(_html);*/
+          //var newOne = $compile(_html)(scope);
+          //elem.append(newOne);
+        }
+      }
+    }]);
+    
+    
+  </script>
+</body>
+</html>

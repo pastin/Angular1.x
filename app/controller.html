@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+  <div>麻烦先打开控制台查看log</div>
+  <div ng-controller="parentCtrl">              <!--父级-->
+    <div ng-controller="selfCtrl">              <!--自己-->
+      <a ng-click="click()">click me</a>
+      <div ng-controller="ChildCtrl"></div>     <!--子级-->
+    </div>
+    <div ng-controller="BroCtrl"></div>         <!--平级-->
+  </div>
+
+  <div ng-view></div>
+
+  <script src="lib/angular/angular.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('myApp',[]);
+    app.controller('parentCtrl',['$scope',function($scope){
+      $scope.$on('to-parent',function(event,data){
+        console.log('ParentCtrl',data);
+      });
+      $scope.$on('to-child',function(event,data){
+        console.log('parentCtrl',data);
+      })
+    }]);
+
+    app.controller('selfCtrl',['$scope',function($scope){
+      $scope.click = function(){
+        $scope.$broadcast('to-child','child');
+        $scope.$emit('to-parent','parent');
+      }
+    }]);
+    
+    app.controller('ChildCtrl',['$scope',function($scope){
+      $scope.$on('to-child', function(event,data) {
+        console.log('ChildCtrl', data);      //子级能得到值
+      });
+      $scope.$on('to-parent', function(event,data) {
+        console.log('ChildCtrl', data);      //父级得不到值
+      });
+    }]);
+     
+    app.controller('BroCtrl', function($scope){
+      $scope.$on('to-parent', function(event,data) {
+        console.log('BroCtrl', data);         //平级得不到值
+      });
+      $scope.$on('to-child', function(event,data) {
+        console.log('BroCtrl', data);         //平级得不到值
+      });
+    });
+    
+  </script>
+</body>
+</html>

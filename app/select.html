@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <style type="text/css">
+    .form-control{
+      float: left;
+    }
+  </style>
+</head>
+<body ng-app="myapp">
+  <div ng-controller="selectCtrl">
+    <select ng-model="vm.value" ng-change="switchSel()" ng-options="city.label for city in vm.cities">
+      <option value="" >-- 请选择城市 --</option>
+    </select>
+   <div>您输入的是：{{vm.value}}</div>
+   #######################################################
+   <div>
+      <div class="form-control">
+        <select ng-model="am.province" ng-options="province.label for province in am.provinces">
+          <option value="">-- 请选择省份 --</option>
+        </select>
+      </div>
+    <div ng-show="am.province.cities" class="form-control">
+      <select ng-model="am.city" ng-options="city.label for city in am.province.cities">
+        <option value="">-- 请选择城市 --</option>
+      </select>
+    </div>
+    <div ng-show="am.city.districts" class="form-control">
+      <select ng-model="am.district" ng-options="district.label for district in am.city.districts">
+        <option value="">-- 请选择区县 --</option>
+      </select>
+    </div>
+      <div>你选择的是：{{am.province.label}} - {{am.city.label}} - {{am.district.label}}</div>
+   </div>
+  </div>
+  <script src="lib/jquery/jquery-1.11.3.min.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('myapp',[]);
+	//定义全局的变量
+    app.constant('CityData',[
+        {
+          label:'陕西省',
+          cities:[
+            {
+              label:'西安市',
+              districts:[
+                {
+                  label:'未央区',
+                },
+                {
+                  label:'高新区',
+                },
+                {
+                  label:'雁塔区',
+                },
+              ]
+            },
+            {
+              label:'咸阳市',
+              districts:[
+                {
+                  label:'A区',
+                },
+                {
+                  label:'B区',
+                },
+                {
+                  label:'C区',
+                },
+              ]
+            },
+            {
+              label:'榆林市',
+              districts:[
+                {
+                  label:'D区',
+                },
+                {
+                  label:'E区',
+                },
+                {
+                  label:'F区',
+                },
+              ]
+            },
+            {
+              label:'延安市',
+              districts:[
+                {
+                  label:'G区',
+                },
+                {
+                  label:'H区',
+                },
+                {
+                  label:'I区',
+                },
+              ]
+            },
+          ]
+        },
+        {
+          label:'陕西省',
+          cities:[
+            {
+              label:'西安市',
+              districts:[
+                {
+                  label:'未央区',
+                },
+                {
+                  label:'高新区',
+                },
+                {
+                  label:'雁塔区',
+                },
+              ]
+            },
+            {
+              label:'咸阳市',
+              districts:[
+                {
+                  label:'A区',
+                },
+                {
+                  label:'B区',
+                },
+                {
+                  label:'C区',
+                },
+              ]
+            },
+            {
+              label:'榆林市',
+              districts:[
+                {
+                  label:'D区',
+                },
+                {
+                  label:'E区',
+                },
+                {
+                  label:'F区',
+                },
+              ]
+            },
+            {
+              label:'延安市',
+              districts:[
+                {
+                  label:'G区',
+                },
+                {
+                  label:'H区',
+                },
+                {
+                  label:'I区',
+                },
+              ]
+            },
+          ]
+        }
+      ]);
+    app.controller('selectCtrl',['$scope','CityData',function($scope,CityData){
+      var vm = $scope.vm = {};
+      vm.cities = [
+        {
+          province:'陕西省',
+          code:'sx',
+          label:'西安市'
+        },
+        {
+          province:'陕西省',
+          code:'xy',
+          label:'咸阳市'
+        },
+        {
+          province:'陕西省',
+          code:'yl',
+          label:'杨陵区'
+        },
+        {
+          province:'北京',
+          code:'bj',
+          label:'北京市'
+        },
+        {
+          province:'广东省',
+          code:'gz',
+          label:'广州市'
+        },
+        {
+          province:'广州省',
+          code:'sz',
+          label:'深圳市'
+        },
+        {
+          province:'陕西省',
+          code:'yl',
+          label:'榆林市'
+        },
+      ];
+      vm.value = vm.cities[0];
+      $scope.switchSel = function(){
+        console.log(vm.value)
+      }
+
+      var am = $scope.am = {};
+      am.provinces = CityData;
+      $scope.$watch('am.province',function(provice){
+        am.city = null;
+      });
+      $scope.$watch('am.city',function(city){
+        am.district = null;
+      })
+    }]);
+  </script>
+</body>
+</html>

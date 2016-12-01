@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+</head>
+<body ng-app="myapp">
+  <div>
+    <input type="text" ng-model="color" placeholder="Enter a color">
+    <hello-world/>
+  </div>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+  -->
+  <hr>
+
+  <div ng-controller="testDom">
+    <button type="button" test-click>click</button>
+      ☞→ 
+      <dom-html code="domCode"></dom-html>
+  </div>
+  <script src="lib/jquery/jquery-1.11.3.min.js"></script>
+  <script src="lib/angular/angular.js"></script>
+
+  <!--<script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>-->
+  <!--<script src="js/filters.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>  
+  <script src="lib/angular/angular-cookies.js"></script> 
+  <script src="js/directives.js"></script>-->
+  <script type="text/javascript">
+    var app = angular.module('myapp',[]);
+    app.directive('helloWorld',function(){
+      return{
+        restrict:'AE',
+        replace:true,
+        template:'<p style="background-color:{{color}}">Hello World',
+        link:function(scope,elem,attrs){
+          elem.bind('click',function(){
+            elem.css('background-color',"white");
+            scope.$apply(function(){
+              scope.color = "white";
+            });
+          });
+          elem.bind('mouseover',function(){
+            elem.css('cursor','pointer');
+          })
+        }
+      }
+    })
+    app.controller('testDom',['$scope',function($scope){
+      $scope.domCode = 'html';
+    }]);
+    app.directive('domHtml',function(){
+      return{
+        restrict:'AE',
+        replace:false,
+        scope:{
+          code:'@'
+        },
+        template:'<div>{{code}}</div>',
+        link:function(scope,elem,attrs){
+          elem.bind('click',function(){
+            scope.domCode = 'html';
+            console.log(scope)
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
