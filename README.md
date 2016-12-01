@@ -10,15 +10,15 @@
 # AngularJS 特性：
 
     
-   一、MVC(MVVM)模式
+     一、MVC(MVVM)模式
 
-   二、数据双向绑定
+     二、数据双向绑定
 
-   三、指令
+     三、指令
 
-   四、模板
+     四、模板
 
-   五、服务和依赖注入
+     五、服务和依赖注入
    
  # MVC(MVVM)模式
  
@@ -28,15 +28,15 @@
    
 # MVC的核心是$scope
 
-    $scope是一个POJO(Plain Old JavaScript Object)
-    $scope提供了一些工具方法$watch()/$apply()
-    $scope是表达式的执行环境（或者叫作用域）
-    $scope是一个树型结构，与DOM标签平行
-    子$scope对象会继承父$scope上的属性和方法 
-    每一个Angular应用只有一个根$scope对象（一般位于ng-app上）
-    $scope可以传播事件，类似DOM事件，可以向上也可以向下
-    $scope不仅是MVC的基础，也是后面实现双向数据绑定的基础
-    可以用angular.element($0).scope()进行调试
+    » $scope是一个POJO(Plain Old JavaScript Object)
+    » $scope提供了一些工具方法$watch()/$apply()
+    » $scope是表达式的执行环境（或者叫作用域）
+    » $scope是一个树型结构，与DOM标签平行
+    » 子$scope对象会继承父$scope上的属性和方法 
+    » 每一个Angular应用只有一个根$scope对象（一般位于ng-app上）
+    » $scope可以传播事件，类似DOM事件，可以向上也可以向下
+    » $scope不仅是MVC的基础，也是后面实现双向数据绑定的基础
+    » 可以用angular.element($0).scope()进行调试
     
 # 数据双向绑定
 
